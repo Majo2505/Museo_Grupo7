@@ -12,9 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Dtos\" />
-    <Folder Include="Data\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
