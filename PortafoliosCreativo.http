@@ -1,0 +1,6 @@
+@PortafoliosCreativo_HostAddress = http://localhost:5197
+
+GET {{PortafoliosCreativo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
