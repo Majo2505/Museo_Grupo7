@@ -1,0 +1,18 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Museo.Models
+{
+    public class Canvas
+    {
+        public Guid Id { get; set; }
+        [Required, StringLength(200)]
+        public string Title { get; set; }
+        [Required, StringLength(300)]
+        public string Technique { get; set; } = string.Empty;
+        [Required]
+        public DateTime DateOfEntry { get; set; } = DateTime.Now;
+
+
+        public ICollection<Work> Works { get; set; } = new List<Work>();
+    }
+}

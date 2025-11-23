@@ -2,16 +2,18 @@
 
 namespace Museo.Models
 {
-    public class Artista
+    public class Artist
     {
         public Guid Id { get; set; }
         [Required, StringLength(200)]
         public string Name { get; set; }
         [Required, StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         [Required, StringLength(100)]
-        public string Especialidad { get; set; }
+        public string Specialty { get; set; } = string.Empty;
         [Required, StringLength(100)]
-        public string TipoDeObra { get; set; }
+        public string TypeOfWork { get; set; }
+
+        public ICollection<Work> Works { get; set; } = new List<Work>();
     }
 }
