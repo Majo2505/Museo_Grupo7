@@ -1,6 +1,4 @@
-﻿namespace Museo.Models.DTOS
-{
-    // Museo/Models/DTOS/LoginResponseDto.cs
+﻿    // Museo/Models/DTOS/LoginResponseDto.cs
     namespace Museo.Models.DTOS
     {
         public class LoginResponseDto
@@ -25,5 +23,3 @@
             public required string RefreshToken { get; set; }
         }
     }
-
-}
