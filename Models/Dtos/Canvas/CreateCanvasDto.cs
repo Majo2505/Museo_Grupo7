@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Museo.Models.Dtos
+namespace Museo.Models.Dtos.Canvas
 {
     public class CreateCanvasDto
     {
@@ -10,5 +10,9 @@ namespace Museo.Models.Dtos
         public string Technique { get; set; } = string.Empty;
         [Required]
         public DateTime DateOfEntry { get; set; } = DateTime.Now;
+        [Required]
+        public Guid MuseumId { get; set; }
+        [Required]
+        public Guid ArtistId { get; set; }
     }
 }

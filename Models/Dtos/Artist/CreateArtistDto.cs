@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Museo.Models.Dtos
+namespace Museo.Models.Dtos.Artist
 {
-    public class UpdateArtistDto
+    public class CreateArtistDto
     {
         [Required, StringLength(200)]
         public string Name { get; set; }

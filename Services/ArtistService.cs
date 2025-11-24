@@ -1,23 +1,23 @@
 ﻿using Museo.Models;
-using Museo.Models.Dtos;
+using Museo.Models.Dtos.Artist;
 using Museo.Repositories;
 
 namespace Museo.Services
 {
     public class ArtistService : IArtistService
     {
-        private readonly IArtistRepository _artistas;
-        private readonly ICanvasRepository _lienzos;
+        private readonly IArtistRepository _artists;
+        private readonly ICanvasRepository _canvas;
 
-        public ArtistService(IArtistRepository artistas, ICanvasRepository lienzos)
+        public ArtistService(IArtistRepository artists, ICanvasRepository canvas)
         {
-            _artistas = artistas;
-            _lienzos = lienzos;
+            _artists = artists;
+            _canvas = canvas;
         }
 
         public async Task<Artist> Create(CreateArtistDto dto)
         {
-            var exist = _artistas.ExistsByName(dto.Name);
+            var exist = _artists.ExistsByName(dto.Name);
             if (exist.Result)
             {
                 throw new InvalidOperationException("The name of the artist already exist");
@@ -30,26 +30,27 @@ namespace Museo.Services
                 Specialty = dto.Specialty,
                 TypeOfWork = dto.TypeOfWork
             };
-            await _artistas.Add(artista);
+            await _artists.Add(artista);
             return artista;
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            await _artists.Delete(id);
+            return true;
         }
 
-        public Task<IEnumerable<Artist>> GetAll()
+        public async Task<IEnumerable<Artist>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _artists.GetAll();
         }
 
-        public Task<Artist?> GetById(Guid id)
+        public async Task<Artist?> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _artists.GetById(id);
         }
 
-        public Task<Artist?> Update(Guid id, UpdateArtistDto artista)
+        public async Task<Artist?> Update(Guid id, UpdateArtistDto artista)
         {
             throw new NotImplementedException();
         }

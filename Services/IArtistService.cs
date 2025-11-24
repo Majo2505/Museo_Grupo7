@@ -1,5 +1,5 @@
 ﻿using Museo.Models;
-using Museo.Models.Dtos;
+using Museo.Models.Dtos.Artist;
 
 namespace Museo.Services
 {
