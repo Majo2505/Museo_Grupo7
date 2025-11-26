@@ -13,33 +13,33 @@ namespace Museo.Repositories
             _context = context;
         }
 
-        public async Task Add(Canvas lienzo)
+        public async Task Add(Canvas canvas)
         {
-            await _context.Lienzos.AddAsync(lienzo);
+            await _context.Canvas.AddAsync(canvas);
             await _context.SaveChangesAsync();
         }
 
         public async Task Delete(Guid id)
         {
-            var lienzo = await _context.Lienzos.FirstOrDefaultAsync(a => a.Id == id);
-            if (lienzo == null) throw new InvalidOperationException("Id de lienzo no encontrado");
-            _context.Lienzos.Remove(lienzo);
+            var canvas = await _context.Canvas.FirstOrDefaultAsync(a => a.Id == id);
+            if (canvas == null) throw new InvalidOperationException("Id de canvas no encontrado");
+            _context.Canvas.Remove(canvas);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Canvas>> GetAll()
         {
-            return await _context.Lienzos.AsNoTracking().ToListAsync();
+            return await _context.Canvas.AsNoTracking().ToListAsync();
         }
 
         public async Task<Canvas?> GetById(Guid id)
         {
-            return await _context.Lienzos.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Canvas.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Update(Canvas lienzo)
+        public async Task Update(Canvas canvas)
         {
-            _context.Lienzos.Update(lienzo);
+            _context.Canvas.Update(canvas);
             await _context.SaveChangesAsync();
         }
     }
