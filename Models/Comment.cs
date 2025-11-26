@@ -2,7 +2,7 @@
 
 namespace Museo.Models
 {
-    public class Comentario
+    public class Comment
     {
         public Guid Id { get; set; }
         public required string Content { get; set; }
