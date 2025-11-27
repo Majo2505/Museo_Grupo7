@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Museo.Models.DTOS;
-using Museo.Models.DTOS;
-using Museo.Models.DTOS.Museo.Models.DTOS;
 using Museo.Services;
 
 namespace Museo.Controllers

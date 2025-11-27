@@ -19,7 +19,8 @@ namespace Museo.Data
         {
             modelBuilder.Entity<User>();
 
-            modelBuilder.Entity<Artist>(a => { 
+            modelBuilder.Entity<Artist>(a =>
+            {
                 a.HasKey(artist => artist.Id);
                 a.Property(artist => artist.Name).IsRequired().HasMaxLength(200);
                 a.Property(artist => artist.Description).IsRequired().HasMaxLength(500);

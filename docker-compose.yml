@@ -4,12 +4,12 @@ services:
     container_name: museo_api
     ports:
       - "8080:8080"
+    env_file:
+      - .env
+    
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__Default=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-      - Jwt__Key=${JWT_KEY}
-      - Jwt__Issuer=${JWT_ISSUER}
-      - Jwt__Audience=${JWT_AUDIENCE}
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=${POSTGRES_DSB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - Jwt__ExpiresMinutes=60
       - Jwt__RefreshDays=14
     depends_on:

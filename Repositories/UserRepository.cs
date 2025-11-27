@@ -1,10 +1,7 @@
 ﻿// Museo/Repositories/UserRepository.cs (ejemplo EF)
-using Microsoft.EntityFrameworkCore;
 using Museo.Data;
 using Museo.Models;
-using Museo.Repositories;
-using Museo.Data;
-using Museo.Models;
+
 
 namespace Museo.Repositories
 {

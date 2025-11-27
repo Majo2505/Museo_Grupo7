@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using Museo.Data;
+﻿using Museo.Data;
 using Museo.Models;
 
 namespace Museo.Repositories

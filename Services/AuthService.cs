@@ -1,15 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using Museo.Models;
+﻿using Museo.Models;
 using Museo.Models.DTOS;
 using Museo.Repositories;
-using Museo.Models;
-using Museo.Models.DTOS;
-using Museo.Repositories;
-using System.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Museo.Claims;
-using System.Museo.Cryptography;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Museo.Services
@@ -126,11 +119,11 @@ namespace Museo.Services
             };
 
             var keyBytes = Encoding.UTF8.GetBytes(key);
-            var creds = new SigningCredentials(new SymmetricMuseoKey(keyBytes), MuseoAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256);
 
             var expires = DateTime.UtcNow.AddMinutes(expireMinutes);
 
-            var token = new JwtMuseoToken(
+            var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
@@ -138,7 +131,7 @@ namespace Museo.Services
                 signingCredentials: creds
             );
 
-            var jwt = new JwtMuseoTokenHandler().WriteToken(token);
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return (jwt, (int)TimeSpan.FromMinutes(expireMinutes).TotalSeconds, jti);
         }
 
