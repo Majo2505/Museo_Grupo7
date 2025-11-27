@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Museo.Models
 {
@@ -15,6 +16,7 @@ namespace Museo.Models
 
         public ICollection<Work> Works { get; set; } = new List<Work>();
 
+        [JsonIgnore]
         public Museum? Museum { get; set; }
 
         public Guid MuseumId { get; set; }

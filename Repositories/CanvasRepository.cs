@@ -22,19 +22,19 @@ namespace Museo.Repositories
         public async Task Delete(Guid id)
         {
             var canvas = await _context.Canvas.FirstOrDefaultAsync(a => a.Id == id);
-            if (canvas == null) throw new InvalidOperationException("Id de canvas no encontrado");
+            if (canvas == null) throw new InvalidOperationException("Canvas Id not found");
             _context.Canvas.Remove(canvas);
             await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Canvas>> GetAll()
         {
-            return await _context.Canvas.AsNoTracking().ToListAsync();
+            return await _context.Canvas.AsNoTracking().Include(c => c.Works).ThenInclude(w => w.Artist).ToListAsync();
         }
 
         public async Task<Canvas?> GetById(Guid id)
         {
-            return await _context.Canvas.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Canvas.AsNoTracking().Include(c => c.Works).ThenInclude(w => w.Artist).FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task Update(Canvas canvas)

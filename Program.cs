@@ -95,6 +95,18 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));
 
+builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<ICanvasRepository, CanvasRepository>();
+builder.Services.AddScoped<IWorkRepository, WorkRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IMuseumRepository, MuseumRepository>();
+
+
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<ICanvasService, CanvasService>();
+builder.Services.AddScoped<IWorkService, WorkService>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IMuseumService, MuseumService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

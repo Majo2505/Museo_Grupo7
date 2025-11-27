@@ -18,15 +18,12 @@ namespace Museo.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>();
-
-            modelBuilder.Entity<Artist>(a =>
-            {
+            modelBuilder.Entity<Artist>(a => {
                 a.HasKey(artist => artist.Id);
                 a.Property(artist => artist.Name).IsRequired().HasMaxLength(200);
                 a.Property(artist => artist.Description).IsRequired().HasMaxLength(500);
                 a.Property(artist => artist.Specialty).IsRequired().HasMaxLength(100);
                 a.Property(artist => artist.TypeOfWork).IsRequired().HasMaxLength(100);
-                //a.HasMany(artist=>artist.Works).WithOne(work=>work.Artist).HasForeignKey(work=>work.ArtistId).OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Canvas>(c =>
@@ -35,7 +32,6 @@ namespace Museo.Data
                 c.Property(canvas => canvas.Title).IsRequired().HasMaxLength(200);
                 c.Property(canvas => canvas.Technique).IsRequired().HasMaxLength(300);
                 c.Property(canvas => canvas.DateOfEntry).IsRequired();
-                //c.HasMany(canvas => canvas.Works).WithOne(work => work.Canvas).HasForeignKey(work => work.CanvasId).OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Work>(w =>
@@ -48,8 +44,8 @@ namespace Museo.Data
             modelBuilder.Entity<City>(c =>
             {
                 c.HasKey(city => city.Id);
-                c.Property(city => city.Nombre).IsRequired().HasMaxLength(200);
-                c.Property(city => city.Pais).IsRequired().HasMaxLength(200);
+                c.Property(city => city.Name).IsRequired().HasMaxLength(200);
+                c.Property(city => city.Country).IsRequired().HasMaxLength(200);
                 c.HasOne(city => city.Museum).WithOne(museum => museum.City).HasForeignKey<Museum>(museum => museum.CityId).OnDelete(DeleteBehavior.Cascade);
             });
 

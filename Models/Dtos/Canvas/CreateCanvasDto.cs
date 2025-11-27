@@ -7,12 +7,12 @@ namespace Museo.Models.Dtos.Canvas
         [Required, StringLength(200)]
         public string Title { get; set; }
         [Required, StringLength(300)]
-        public string Technique { get; set; } = string.Empty;
+        public string Technique { get; set; }
         [Required]
         public DateTime DateOfEntry { get; set; } = DateTime.Now;
         [Required]
         public Guid MuseumId { get; set; }
         [Required]
-        public Guid ArtistId { get; set; }
+        public List<Guid> ArtistIds { get; set; } = new();
     }
 }
