@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Museo.Models
 {
@@ -12,9 +13,9 @@ namespace Museo.Models
         [Range(0,2025)]
         public int OpeningYear { get; set; }
 
-
         public ICollection<Canvas> Canvas { get; set; } = new List<Canvas>();
-        
+
+        [JsonIgnore]
         public City? City { get; set; }
 
         public Guid CityId { get; set; }

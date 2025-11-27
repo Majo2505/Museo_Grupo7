@@ -13,6 +13,6 @@ namespace Museo.Models.Dtos.Canvas
         [Required]
         public Guid MuseumId { get; set; }
         [Required]
-        public Guid ArtistId { get; set; }
+        public List<Guid> ArtistIds { get; set; } = new();
     }
 }

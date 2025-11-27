@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Museo.Models
 {
@@ -8,7 +9,9 @@ namespace Museo.Models
         public Guid CanvasId { get; set; }
         [Required]
         public Guid ArtistId { get; set; }
+        [JsonIgnore]
         public Canvas? Canvas { get; set; }
+        [JsonIgnore]
         public Artist? Artist { get; set; }
     }
 }
