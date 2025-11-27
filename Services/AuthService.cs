@@ -1,6 +1,8 @@
-﻿using Museo.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Museo.Models;
 using Museo.Models.DTOS;
 using Museo.Repositories;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;

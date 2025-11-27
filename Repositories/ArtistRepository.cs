@@ -1,4 +1,5 @@
-﻿using Museo.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Museo.Data;
 using Museo.Models;
 
 namespace Museo.Repositories
