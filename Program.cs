@@ -1,17 +1,55 @@
+using Microsoft.EntityFrameworkCore;
+using Museo.Data;
+using Museo.Repositories;
+using Museo.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json");
+}
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+
+builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<ICanvasRepository, CanvasRepository>();
+builder.Services.AddScoped<IWorkRepository, WorkRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IMuseumRepository, MuseumRepository>();
+
+
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<ICanvasService, CanvasService>();
+builder.Services.AddScoped<IWorkService, WorkService>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IMuseumService, MuseumService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[Error] Database migration failed: {ex.Message}");
+    }
 }
 
 app.UseHttpsRedirection();

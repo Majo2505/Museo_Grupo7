@@ -7,21 +7,16 @@ namespace Museo.Services
     public class ArtistService : IArtistService
     {
         private readonly IArtistRepository _artists;
-        private readonly ICanvasRepository _canvas;
 
         public ArtistService(IArtistRepository artists, ICanvasRepository canvas)
         {
             _artists = artists;
-            _canvas = canvas;
         }
 
         public async Task<Artist> Create(CreateArtistDto dto)
         {
-            var exist = _artists.ExistsByName(dto.Name);
-            if (exist.Result)
-            {
-                throw new InvalidOperationException("The name of the artist already exist");
-            }
+            var exists = await _artists.ExistsByName(dto.Name);
+            if (exists) throw new InvalidOperationException("The name of the artist already exists");
             var artista = new Artist
             {
                 Id = Guid.NewGuid(),
@@ -40,19 +35,52 @@ namespace Museo.Services
             return true;
         }
 
-        public async Task<IEnumerable<Artist>> GetAll()
+        public async Task<IEnumerable<ArtistResponseDto>> GetAll()
         {
-            return await _artists.GetAll();
+            var artists = await _artists.GetAll();
+            return artists.Select(a => new ArtistResponseDto
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Description = a.Description,
+                Specialty = a.Specialty,
+                TypeOfWork = a.TypeOfWork,
+
+                CanvasTitles = a.Works.Select(w => w.Canvas.Title).ToList()
+            });
         }
 
-        public async Task<Artist?> GetById(Guid id)
+        public async Task<ArtistResponseDto?> GetById(Guid id)
         {
-            return await _artists.GetById(id);
+            var artist = await _artists.GetById(id);
+
+            if (artist == null) return null;
+
+            return new ArtistResponseDto
+            {
+                Id = artist.Id,
+                Name = artist.Name,
+                Description = artist.Description,
+                Specialty = artist.Specialty,
+                TypeOfWork = artist.TypeOfWork,
+
+                CanvasTitles = artist.Works.Select(w => w.Canvas.Title).ToList()
+            };
         }
 
-        public async Task<Artist?> Update(Guid id, UpdateArtistDto artista)
+
+        public async Task<Artist?> Update(Guid id, UpdateArtistDto dto)
         {
-            throw new NotImplementedException();
+            var artist = await _artists.GetById(id);
+            if (artist == null) throw new InvalidOperationException("Artist ID not found");
+
+            artist.Name = dto.Name;
+            artist.Description = dto.Description;
+            artist.Specialty = dto.Specialty;
+            artist.TypeOfWork = dto.TypeOfWork;
+
+            await _artists.Update(artist);
+            return artist;
         }
     }
 }
