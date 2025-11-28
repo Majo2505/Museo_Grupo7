@@ -12,9 +12,9 @@ This document provides a detailed technical overview of the "Museo" RESTful API,
 
 ## 👥 Development Team - Group 7
 
-| Ariana Aylen Pita Vargas |
-| Maria Jose Sandoval Orellana* |
-| Sebastian Alejandro Arce Antezana |
+| **Ariana Aylen Pita Vargas |
+| **Maria Jose Sandoval Orellana |
+| **Sebastian Alejandro Arce Antezana |
 
 ---
 
@@ -271,4 +271,149 @@ This controller manages the artist catalog. It stands out for using DTO projecti
 
 ---
 
-### Artwork / Canvas Module (
+### Artwork / Canvas Module (`/api/Canvas`)
+
+This is the relational core of the system. A `Canvas` connects `Museum` (N:1) and `Artist` (N:M).
+
+---
+#### **Endpoint: `GET /api/Canvas`**
+*   **Description:** Lists all available artworks.
+*   **Optimization:** Uses DTOs to display artist names (`ArtistNames`) instead of complex `Work` objects, simplifying consumption for the frontend.
+*   **Security:** Public (`AllowAnonymous`).
+*   **Response (200 OK - `IEnumerable<CanvasResponseDto>`):**
+    ```
+    [
+      {
+        "id": "a1b2c3d4-...",
+        "title": "Guernica",
+        "technique": "Oil on canvas",
+        "dateOfEntry": "1937-06-04T00:00:00Z",
+        "museumId": "MUSEUM_GUID",
+        "artistNames": [
+          "Pablo Picasso"
+        ]
+      }
+    ]
+    ```
+
+---
+#### **Endpoint: `POST /api/Canvas`**
+*   **Description:** Registers a new artwork. This endpoint is **transactional**: it creates the record in the `Canvas` table and, simultaneously, inserts the necessary records into the intermediate `Works` table to link artists.
+*   **Security:** Protected (`[Authorize]`).
+*   **Request Body (`CreateCanvasDto`):**
+    ```
+    {
+      "title": "The Persistence of Memory",
+      "technique": "Oil on canvas",
+      "dateOfEntry": "1931-01-01T00:00:00Z",
+      "museumId": "MOMA_GUID",
+      "artistIds": [
+        "DALI_ARTIST_GUID"
+      ]
+    }
+    ```
+*   **Response (201 Created):** Returns the created artwork.
+*   **Possible Errors:**
+    *   `404 Not Found`: If `museumId` or any of the `artistIds` do not exist in the database.
+
+---
+
+### Museum Module (`/api/Museum`)
+
+Manages the main entities where artworks are housed.
+
+---
+#### **Endpoint: `GET /api/Museum`**
+*   **Description:** Returns the catalog of museums.
+*   **Projection:** Includes a nested list of artworks (`Canvas`) owned by each museum. To prevent cycles, nested `Canvas` objects do **NOT** include the `Museum` property back, but **DO** include the list of their artist names.
+*   **Security:** Public (`AllowAnonymous`).
+*   **Response (200 OK - `IEnumerable<MuseumResponseDto>`):**
+    ```
+    [
+      {
+        "id": "m1u2s3e4-...",
+        "name": "Reina Sofía Museum",
+        "description": "National museum of 20th-century art.",
+        "openingYear": 1992,
+        "cityId": "MADRID_GUID",
+        "canvas": [
+          {
+            "id": "c1a2n3v4...",
+            "title": "Guernica",
+            "artistNames": ["Pablo Picasso"]
+          }
+        ]
+      }
+    ]
+    ```
+
+---
+#### **Endpoint: `POST /api/Museum`**
+*   **Description:** Registers a new museum in a specific city.
+*   **Security:** Protected (`[Authorize]`).
+*   **Request Body (`CreateMuseumDto`):**
+    ```
+    {
+      "name": "Prado Museum",
+      "description": "One of the most important in the world.",
+      "openingYear": 1819,
+      "cityId": "MADRID_GUID"
+    }
+    ```
+*   **Response (201 Created):** Returns the created museum.
+
+---
+
+### City Module (`/api/City`)
+
+Simple geographic entity grouping museums.
+
+---
+#### **Endpoint: `GET /api/City`**
+*   **Description:** Lists registered cities.
+*   **Security:** Public (`AllowAnonymous`).
+*   **Response (200 OK):**
+    ```
+    [
+      {
+        "id": "c1i2t3y4...",
+        "name": "Madrid",
+        "country": "Spain",
+        "museum": {
+            "id": "...",
+            "name": "Prado Museum"
+        }
+      }
+    ]
+    ```
+*(Note: The nested `museum` object here does not expand its `canvas` list to keep the response lightweight).*
+
+---
+#### **Endpoint: `POST /api/City`**
+*   **Description:** Adds a new city to the system.
+*   **Security:** Protected (`[Authorize]`).
+*   **Request Body:**
+    ```
+    {
+      "name": "Paris",
+      "country": "France"
+    }
+    ```
+*   **Response (201 Created):** Returns the created city.
+
+---
+
+## ⚙️ Configuration and Environment Variables
+
+The project uses `DotNetEnv` to load sensitive configurations from a `.env` file in the root, protecting credentials in version control.
+
+| Variable | Description | Default Value (Dev) |
+| :--- | :--- | :--- |
+| `POSTGRES_DB` | Database Name | `museodb` |
+| `POSTGRES_USER` | Database User | `museouser` |
+| `POSTGRES_PASSWORD` | Database Password | `supersecret` |
+| `JWT_KEY` | Secret key for Token signing | *(Must be robust)* |
+| `JWT_REFRESHDAYS` | Refresh Token validity days | `14` |
+
+---
+© 2025 Museo API - Systems Engineering Project
