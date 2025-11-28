@@ -20,5 +20,7 @@ namespace Museo.Models
         public Museum? Museum { get; set; }
 
         public Guid MuseumId { get; set; }
+
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
