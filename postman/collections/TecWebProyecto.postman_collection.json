@@ -1,763 +1,1341 @@
 {
-  "info": {
-    "_postman_id": "f20efca8-cda6-4039-be8b-54acb1cc89ec",
-    "name": "TecWebProyecto",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Proyecto_Museo",
-      "item": [
-        {
-          "name": "Crear Artista",
-          "id": "4692b8be-7a81-444d-bc5c-e9f4a04c5e2e",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Carlos\",\r\n  \"description\": \"artista numero 1\",\r\n  \"specialty\": \"oleo\",\r\n  \"typeOfWork\": \"painting\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/artist",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "artist"
-              ]
-            }
-          }
-        },
-        {
-          "name": "registerSofiaVisitante",
-          "id": "b53b6926-ec97-4ce5-a80e-0bc49fa15372",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"sofia3.mendez@gmail.com\",\r\n  \"UserName\": \"sofiaMende3z\",\r\n  \"Password\": \"Sofia2025\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "registerVisitante2",
-          "id": "52bb0c50-7014-4f68-abd6-d1195e968fd3",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"maria.mendez@gmail.com\",\r\n  \"UserName\": \"maria\",\r\n  \"Password\": \"maria123\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "registeradmin",
-          "id": "ebdc2370-82f5-44b7-9006-8d3a97e0266a",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"admin@gmail.com\",\r\n  \"UserName\": \"admin\",\r\n  \"Password\": \"123\",\r\n  \"Role\" : \"Admin\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "registerCarlosArtista",
-          "id": "8fc8cd9e-606e-4be0-956c-f713c05d7eac",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"carlos.rivera@outlook.com\",\r\n  \"UserName\": \"carlosRivera85\",\r\n  \"Password\": \"Rivera85\",\r\n  \"Role\": \"Artista\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "registerMonicaArtista",
-          "id": "850275ba-5f15-4434-ad2c-518232904de0",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"monicaArtista@outlook.com\",\r\n  \"UserName\": \"monica98\",\r\n  \"Password\": \"monica123\",\r\n  \"Role\": \"Artista\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Login Sofia Vistitante",
-          "id": "748a09d6-318c-4c4b-9bc4-5b92685be1b2",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"maria.mendez@gmail.com\",\r\n  \"Password\": \"maria123\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            }
-          }
-        },
-        {
-          "name": "login Carlos Arista",
-          "id": "f446c9f9-b9d8-45b2-bb5c-263ef0fe71bc",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"carlos.rivera@outlook.com\",\r\n  \"Password\": \"Rivera85\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            }
-          }
-        },
-        {
-          "name": "login admin",
-          "id": "001ff0f0-8a52-4f6e-b731-4443f753fda5",
-          "request": {
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"Email\": \"admin@gmail.com\",\r\n  \"Password\": \"123\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            }
-          }
-        },
-        {
-          "name": "CrearLienzo",
-          "id": "d41d9708-04db-4681-b78c-3f1059f44a82",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/canvas",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "canvas"
-              ]
-            }
-          }
-        },
-        {
-          "name": "CrearCiudad",
-          "id": "c96b3a9e-5833-44d0-810d-f49bff5fc380",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlhYzk4Yi03OTJjLTdlZTMtOTQ4Mi1hMGFmOTc5NjRlNDYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwianRpIjoiNTljMTU5YTEtNTAxYy00NTRkLTgzZjMtOTc0YTgxYjY0YTJjIiwiZXhwIjoxNzY0MzIxNjgwLCJpc3MiOiJNaUFwaSIsImF1ZCI6Ik1pQ2xpZW50ZSJ9.q3LyGKXLqVlg4bcAKrKaKG1FePg0HNh4bsOlexijvJc",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\": \"Paris\",\r\n  \"country\": \"Francia\"\r\n  }",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/city",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "city"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetCiudades",
-          "id": "62add383-69d1-44f5-b35e-e28e93366c2d",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\": \"Florencia\",\r\n  \"country\": \"Italia\"}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/city",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "city"
-              ]
-            }
-          }
-        },
-        {
-          "name": "CrearMuseo",
-          "id": "7935ce98-4945-471b-a13f-1e0ca479aa3d",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlhYzk4Yi03OTJjLTdlZTMtOTQ4Mi1hMGFmOTc5NjRlNDYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwianRpIjoiNTljMTU5YTEtNTAxYy00NTRkLTgzZjMtOTc0YTgxYjY0YTJjIiwiZXhwIjoxNzY0MzIxNjgwLCJpc3MiOiJNaUFwaSIsImF1ZCI6Ik1pQ2xpZW50ZSJ9.q3LyGKXLqVlg4bcAKrKaKG1FePg0HNh4bsOlexijvJc",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"portales\",\r\n  \"description\": \"Palacio \",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"a03de2d2-0840-4138-bf01-984c05ca3392\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/museum",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "museum"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetCiudadconMuseo",
-          "id": "28863574-b086-4886-af88-8b65ede50a93",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\"name\": \"Florencia\",\r\n  \"country\": \"Italia\"}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/city",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "city"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetArists",
-          "id": "6f533501-46ed-4036-b334-6159129c676e",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Galería Uffizi\",\r\n  \"description\": \"Palacio y museo en Florencia\",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"47fe309d-ab9d-492b-bd32-3ecd5da8b17d\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/artist",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "artist"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetCanvas",
-          "id": "aed2e807-5cda-448d-b2e8-b3dd7b95d00e",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/canvas",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "canvas"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetMuseo",
-          "id": "50f70986-f477-4e39-8942-de8398f3745d",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Carlos\",\r\n  \"description\": \"artista numero 1\",\r\n  \"specialty\": \"oleo\",\r\n  \"typeOfWork\": \"painting\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/museum",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "museum"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetUNSoloMuseum",
-          "id": "525175bc-20d8-4b74-a612-caa74c0caf36",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Galería Uffizi\",\r\n  \"description\": \"Palacio y museo en Florencia\",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"47fe309d-ab9d-492b-bd32-3ecd5da8b17d\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/museum/440f8024-a805-411e-8137-476eec8016a0",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "museum",
-                "440f8024-a805-411e-8137-476eec8016a0"
-              ]
-            }
-          }
-        },
-        {
-          "name": "PostComment",
-          "id": "200760b5-755e-4247-99bd-cb8669e9207a",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenVisitante}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"content\": \"commentario del visitante 2\",\r\n  \"canvasId\": \"28a95aae-b082-4ca2-927c-d366ae08cbe4\" \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/comments",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "comments"
-              ]
-            }
-          }
-        },
-        {
-          "name": "GetComments",
-          "id": "a4ba1a05-3a28-4788-9a06-fd0ca072d30a",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{tokenAdmin}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://museogrupo7-production.up.railway.app/api/comments/canvas/28a95aae-b082-4ca2-927c-d366ae08cbe4",
-              "protocol": "https",
-              "host": [
-                "museogrupo7-production",
-                "up",
-                "railway",
-                "app"
-              ],
-              "path": [
-                "api",
-                "comments",
-                "canvas",
-                "28a95aae-b082-4ca2-927c-d366ae08cbe4"
-              ]
-            }
-          }
-        }
-      ],
-      "id": "2bc47224-b87f-47bc-867f-0fc75cf1b26b"
-    }
-  ]
+	"info": {
+		"_postman_id": "f20efca8-cda6-4039-be8b-54acb1cc89ec",
+		"name": "TecWebProyecto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Proyecto_Museo",
+			"item": [
+				{
+					"name": "Crear Artista",
+					"id": "4692b8be-7a81-444d-bc5c-e9f4a04c5e2e",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Carlos\",\r\n  \"description\": \"artista numero 1\",\r\n  \"specialty\": \"oleo\",\r\n  \"typeOfWork\": \"painting\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/artist",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"artist"
+							]
+						}
+					}
+				},
+				{
+					"name": "registerSofiaVisitante",
+					"id": "b53b6926-ec97-4ce5-a80e-0bc49fa15372",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"sofia3.mendez@gmail.com\",\r\n  \"UserName\": \"sofiaMende3z\",\r\n  \"Password\": \"Sofia2025\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "registerVisitante2",
+					"id": "52bb0c50-7014-4f68-abd6-d1195e968fd3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"maria.mendez@gmail.com\",\r\n  \"UserName\": \"maria\",\r\n  \"Password\": \"maria123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "registeradmin",
+					"id": "ebdc2370-82f5-44b7-9006-8d3a97e0266a",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"admin@gmail.com\",\r\n  \"UserName\": \"admin\",\r\n  \"Password\": \"123\",\r\n  \"Role\" : \"Admin\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "registerCarlosArtista",
+					"id": "8fc8cd9e-606e-4be0-956c-f713c05d7eac",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"carlos.rivera@outlook.com\",\r\n  \"UserName\": \"carlosRivera85\",\r\n  \"Password\": \"Rivera85\",\r\n  \"Role\": \"Artista\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "registerMonicaArtista",
+					"id": "850275ba-5f15-4434-ad2c-518232904de0",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"monicaArtista@outlook.com\",\r\n  \"UserName\": \"monica98\",\r\n  \"Password\": \"monica123\",\r\n  \"Role\": \"Artista\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login Sofia Vistitante",
+					"id": "748a09d6-318c-4c4b-9bc4-5b92685be1b2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"maria.mendez@gmail.com\",\r\n  \"Password\": \"maria123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "login Carlos Arista",
+					"id": "f446c9f9-b9d8-45b2-bb5c-263ef0fe71bc",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"carlos.rivera@outlook.com\",\r\n  \"Password\": \"Rivera85\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "login admin",
+					"id": "001ff0f0-8a52-4f6e-b731-4443f753fda5",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"admin@gmail.com\",\r\n  \"Password\": \"123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "CrearLienzo",
+					"id": "d41d9708-04db-4681-b78c-3f1059f44a82",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/canvas",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"canvas"
+							]
+						}
+					}
+				},
+				{
+					"name": "CrearCiudad",
+					"id": "c96b3a9e-5833-44d0-810d-f49bff5fc380",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlhYzk4Yi03OTJjLTdlZTMtOTQ4Mi1hMGFmOTc5NjRlNDYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwianRpIjoiNTljMTU5YTEtNTAxYy00NTRkLTgzZjMtOTc0YTgxYjY0YTJjIiwiZXhwIjoxNzY0MzIxNjgwLCJpc3MiOiJNaUFwaSIsImF1ZCI6Ik1pQ2xpZW50ZSJ9.q3LyGKXLqVlg4bcAKrKaKG1FePg0HNh4bsOlexijvJc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Paris\",\r\n  \"country\": \"Francia\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/city",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"city"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetCiudades",
+					"id": "62add383-69d1-44f5-b35e-e28e93366c2d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Florencia\",\r\n  \"country\": \"Italia\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/city",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"city"
+							]
+						}
+					}
+				},
+				{
+					"name": "CrearMuseo",
+					"id": "7935ce98-4945-471b-a13f-1e0ca479aa3d",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTlhYzk4Yi03OTJjLTdlZTMtOTQ4Mi1hMGFmOTc5NjRlNDYiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwianRpIjoiNTljMTU5YTEtNTAxYy00NTRkLTgzZjMtOTc0YTgxYjY0YTJjIiwiZXhwIjoxNzY0MzIxNjgwLCJpc3MiOiJNaUFwaSIsImF1ZCI6Ik1pQ2xpZW50ZSJ9.q3LyGKXLqVlg4bcAKrKaKG1FePg0HNh4bsOlexijvJc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"portales\",\r\n  \"description\": \"Palacio \",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"a03de2d2-0840-4138-bf01-984c05ca3392\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/museum",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"museum"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetCiudadconMuseo",
+					"id": "28863574-b086-4886-af88-8b65ede50a93",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Florencia\",\r\n  \"country\": \"Italia\"}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/city",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"city"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetArists",
+					"id": "6f533501-46ed-4036-b334-6159129c676e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Galería Uffizi\",\r\n  \"description\": \"Palacio y museo en Florencia\",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"47fe309d-ab9d-492b-bd32-3ecd5da8b17d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/artist",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"artist"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetCanvas",
+					"id": "aed2e807-5cda-448d-b2e8-b3dd7b95d00e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/canvas",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"canvas"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetMuseo",
+					"id": "50f70986-f477-4e39-8942-de8398f3745d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Carlos\",\r\n  \"description\": \"artista numero 1\",\r\n  \"specialty\": \"oleo\",\r\n  \"typeOfWork\": \"painting\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/museum",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"museum"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetUNSoloMuseum",
+					"id": "525175bc-20d8-4b74-a612-caa74c0caf36",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Galería Uffizi\",\r\n  \"description\": \"Palacio y museo en Florencia\",\r\n  \"openingYear\": 1581,\r\n  \"cityId\": \"47fe309d-ab9d-492b-bd32-3ecd5da8b17d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/museum/440f8024-a805-411e-8137-476eec8016a0",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"museum",
+								"440f8024-a805-411e-8137-476eec8016a0"
+							]
+						}
+					}
+				},
+				{
+					"name": "PostComment",
+					"id": "200760b5-755e-4247-99bd-cb8669e9207a",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenVisitante}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"commentario del visitante 2\",\r\n  \"canvasId\": \"28a95aae-b082-4ca2-927c-d366ae08cbe4\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/comments",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					}
+				},
+				{
+					"name": "GetComments",
+					"id": "a4ba1a05-3a28-4788-9a06-fd0ca072d30a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"La Anunciación\",\r\n  \"technique\": \"Óleo y temple sobre madera\",\r\n  \"dateOfEntry\": \"2025-11-27T10:00:00Z\",\r\n  \"museumId\": \"440f8024-a805-411e-8137-476eec8016a0\",\r\n  \"artistIds\": [\r\n    \"b7c7ca8e-fa05-47e4-8283-6ecd3c73ecd7\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://museogrupo7-production.up.railway.app/api/comments/canvas/28a95aae-b082-4ca2-927c-d366ae08cbe4",
+							"protocol": "https",
+							"host": [
+								"museogrupo7-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"comments",
+								"canvas",
+								"28a95aae-b082-4ca2-927c-d366ae08cbe4"
+							]
+						}
+					}
+				},
+				{
+					"name": "1. Crear Ciudad (City)",
+					"item": [
+						{
+							"name": "Crear Ciudad - Opción A (Europa)",
+							"id": "a9d3a77f-1d2a-41e9-9d58-c64a856f1f43",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Paris\",\r\n  \"country\": \"Francia\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/city",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"city"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Ciudad - Opción B (Latinoamérica)",
+							"id": "7a3b378c-0230-4e5c-bf1b-4d4f82a1b1c3",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Ciudad de México\",\r\n  \"country\": \"México\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/city",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"city"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Ciudad - Opción C (Asia)",
+							"id": "e0b8d5a2-5b9d-4c3e-b49d-3f0f1b2c4a5c",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Tokio\",\r\n  \"country\": \"Japón\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/city",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"city"
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "2. Crear Artista (Artist)",
+					"item": [
+						{
+							"name": "Crear Artista - Opción A (Renacimiento)",
+							"id": "e7c1f8a4-0a9b-4e1d-9e67-d2c2f3b8e4c1",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Leonardo da Vinci\",\r\n  \"description\": \"Polímata florentino del Renacimiento italiano. Fue pintor, anatomista, arquitecto, paleontólogo, artista, botánico, científico, escritor, escultor, filósofo, ingeniero, inventor, músico, poeta y urbanista.\",\r\n  \"specialty\": \"Pintura al óleo\",\r\n  \"typeOfWork\": \"Renacimiento\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/artist",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"artist"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Artista - Opción B (Surrealismo/México)",
+							"id": "f5b6d7c8-3e21-4f1b-8c7e-a0e1b2f3c4d5",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Frida Kahlo\",\r\n  \"description\": \"Pintora mexicana, su obra gira temáticamente en torno a su biografía y a su propio sufrimiento.\",\r\n  \"specialty\": \"Autorretrato\",\r\n  \"typeOfWork\": \"Realismo Mágico\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/artist",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"artist"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Artista - Opción C (Contemporáneo)",
+							"id": "g6a7h8i9-4j5k-6l7m-8n9o-p0q1r2s3t4u5",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Yayoi Kusama\",\r\n  \"description\": \"Artista japonesa precursora de los movimientos del arte pop, minimalismo y arte feminista.\",\r\n  \"specialty\": \"Instalación y Escultura\",\r\n  \"typeOfWork\": \"Arte Contemporáneo\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/artist",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"artist"
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "3. Crear Museo (Museum)",
+					"item": [
+						{
+							"name": "Crear Museo - Opción A (Para París)",
+							"id": "3b4c5d6e-7f8a-9b0c-1d2e-3f4a5b6c7d8e",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Museo del Louvre\",\r\n  \"description\": \"El museo nacional de Francia, famoso por albergar la Gioconda.\",\r\n  \"openingYear\": 1793,\r\n  \"cityId\": \"PEGAR_AQUI_ID_DE_PARIS\" \r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/museum",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"museum"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Museo - Opción B (Para Ciudad de México)",
+							"id": "4e5f6g7h-8i9j-0k1l-2m3n-4o5p6q7r8s9t",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Palacio de Bellas Artes\",\r\n  \"description\": \"Recinto cultural ubicado en el Centro Histórico de la Ciudad de México, considerado el más importante en la manifestación de las artes en México.\",\r\n  \"openingYear\": 1934,\r\n  \"cityId\": \"PEGAR_AQUI_ID_DE_CDMX\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/museum",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"museum"
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "4. Crear Lienzo/Obra (Canvas)",
+					"item": [
+						{
+							"name": "Crear Lienzo - Opción A (La Gioconda)",
+							"id": "6g7h8i9j-0k1l-2m3n-4o5p-6q7r8s9t0u1v",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"La Gioconda\",\r\n  \"technique\": \"Óleo sobre tabla de álamo\",\r\n  \"dateOfEntry\": \"1797-01-01T00:00:00Z\",\r\n  \"museumId\": \"PEGAR_AQUI_ID_LOUVRE\",\r\n  \"artistIds\": [\r\n    \"PEGAR_AQUI_ID_DA_VINCI\"\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/canvas",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"canvas"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Lienzo - Opción B (Las dos Fridas)",
+							"id": "7h8i9j0k-1l2m-3n4o-5p6q-7r8s9t0u1v2w",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Las dos Fridas\",\r\n  \"technique\": \"Óleo sobre lienzo\",\r\n  \"dateOfEntry\": \"1947-01-01T00:00:00Z\",\r\n  \"museumId\": \"PEGAR_AQUI_ID_BELLAS_ARTES\",\r\n  \"artistIds\": [\r\n    \"PEGAR_AQUI_ID_FRIDA_KAHLO\"\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/canvas",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"canvas"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Lienzo - Opción C (Colaborativa)",
+							"id": "8i9j0k1l-2m3n-4o5p-6q7r-8s9t0u1v2w3x",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Mural de la Hermandad\",\r\n  \"technique\": \"Fresco sobre muro\",\r\n  \"dateOfEntry\": \"2024-11-28T10:00:00Z\",\r\n  \"museumId\": \"PEGAR_AQUI_ID_CUALQUIER_MUSEO\",\r\n  \"artistIds\": [\r\n    \"PEGAR_AQUI_ID_ARTISTA_1\",\r\n    \"PEGAR_AQUI_ID_ARTISTA_2\"\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/canvas",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"canvas"
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "5. Crear Comentario (Comment)",
+					"item": [
+						{
+							"name": "Crear Comentario - Opción A (Crítica positiva)",
+							"id": "9j0k1l2m-3n4o-5p6q-7r8s-9t0u1v2w3x4y",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenVisitante}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"content\": \"Es impresionante ver los detalles de esta obra en persona. La técnica es insuperable.\",\r\n  \"canvasId\": \"PEGAR_AQUI_ID_DEL_CANVAS\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/comments",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							}
+						},
+						{
+							"name": "Crear Comentario - Opción B (Pregunta)",
+							"id": "a0b1c2d3-4e5f-6g7h-8i9j-0k1l2m3n4o5p",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenVisitante}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"content\": \"¿Alguien sabe si esta obra fue restaurada recientemente? Los colores se ven muy vivos.\",\r\n  \"canvasId\": \"PEGAR_AQUI_ID_DEL_CANVAS\"\r\n}"
+								},
+								"url": {
+									"raw": "https://museogrupo7-production.up.railway.app/api/comments",
+									"protocol": "https",
+									"host": [
+										"museogrupo7-production",
+										"up",
+										"railway",
+										"app"
+									],
+									"path": [
+										"api",
+										"comments"
+									]
+								}
+							}
+						}
+					]
+				}
+			],
+			"id": "2bc47224-b87f-47bc-867f-0fc75cf1b26b"
+		}
+	]
 }
