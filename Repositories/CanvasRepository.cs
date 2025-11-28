@@ -32,9 +32,16 @@ namespace Museo.Repositories
             return await _context.Canvas.AsNoTracking().Include(c => c.Works).ThenInclude(w => w.Artist).ToListAsync();
         }
 
+       
         public async Task<Canvas?> GetById(Guid id)
         {
-            return await _context.Canvas.AsNoTracking().Include(c => c.Works).ThenInclude(w => w.Artist).FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Canvas
+                .AsNoTracking()
+                .Include(c => c.Works)
+                    .ThenInclude(w => w.Artist)
+                .Include(c => c.Comments)          
+                    .ThenInclude(com => com.User)   
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task Update(Canvas canvas)
