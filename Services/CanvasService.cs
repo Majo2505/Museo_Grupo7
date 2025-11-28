@@ -88,12 +88,17 @@ namespace Museo.Services
         {
             var canva = await _canvasRepo.GetById(id);
 
+            if (canva == null)
+            {
+                return null;
+            }
+
             var Dto = new CanvasDto { 
                 Id = canva.Id,
                 Title = canva.Title,
-                Technique= canva.Technique,
-                DateOfEntry= canva.DateOfEntry,
-                MuseumId= canva.MuseumId,
+                Technique = canva.Technique,
+                DateOfEntry = canva.DateOfEntry,
+                MuseumId = canva.MuseumId,
                 Artists = canva.Works.Select(w => w.Artist.Name).ToList()
 
             };
