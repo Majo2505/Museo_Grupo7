@@ -29,7 +29,17 @@ namespace Museo.Repositories
 
         public async Task<IEnumerable<Canvas>> GetAll()
         {
-            return await _context.Canvas.AsNoTracking().Include(c => c.Works).ThenInclude(w => w.Artist).ToListAsync();
+            
+            return await _context.Canvas
+                .AsNoTracking()
+                // Carga la colección Works
+                .Include(c => c.Works)
+                    // Carga la navegación Artist dentro de Works
+                    .ThenInclude(w => w.Artist)
+                // ➡️ AGREGAR AQUÍ: Carga la colección Comment dentro de Canvas
+                .Include(c => c.Comments)
+                .ToListAsync();
+        
         }
 
        
