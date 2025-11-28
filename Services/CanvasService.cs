@@ -1,4 +1,5 @@
 ﻿using Museo.Models;
+using Museo.Models.Dtos;
 using Museo.Models.Dtos.Canvas;
 using Museo.Repositories;
 
@@ -83,7 +84,6 @@ namespace Museo.Services
             });
         }
 
-
         public async Task<CanvasDto?> GetById(Guid id)
         {
             var canva = await _canvasRepo.GetById(id);
@@ -93,19 +93,27 @@ namespace Museo.Services
                 return null;
             }
 
-            var Dto = new CanvasDto { 
+            var Dto = new CanvasDto
+            {
                 Id = canva.Id,
                 Title = canva.Title,
                 Technique = canva.Technique,
                 DateOfEntry = canva.DateOfEntry,
                 MuseumId = canva.MuseumId,
-                Artists = canva.Works.Select(w => w.Artist.Name).ToList()
-
+                Artists = canva.Works.Select(w => w.Artist.Name).ToList(),
+                Comments = canva.Comments.Select(c => new CommentResponseDto
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    CreatedAt = c.CreatedAt,
+                    CanvasId = c.CanvasId,
+                    UserId = c.UserId,
+                    Username = c.User.Username
+                }).OrderByDescending(c => c.CreatedAt).ToList()
             };
 
             return Dto;
         }
-
         public async Task<Canvas?> Update(Guid id, UpdateCanvasDto dto)
         {
             var canvas = await _canvasRepo.GetById(id);
