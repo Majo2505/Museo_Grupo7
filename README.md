@@ -271,7 +271,7 @@ This controller manages the artist catalog. It stands out for using DTO projecti
 
 ---
 
-### Artwork / Canvas Module (`/api/Canvas`)
+### Canvas Module (`/api/Canvas`)
 
 This is the relational core of the system. A `Canvas` connects `Museum` (N:1) and `Artist` (N:M).
 
