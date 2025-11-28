@@ -69,9 +69,10 @@ namespace Museo.Services
             return true;
         }
 
-        public async Task<IEnumerable<CanvasDto>> GetAll() 
+        public async Task<IEnumerable<CanvasDto>> GetAll()
         {
             var canvases = await _canvasRepo.GetAll();
+
             return canvases.Select(canva => new CanvasDto
             {
                 Id = canva.Id,
@@ -79,14 +80,11 @@ namespace Museo.Services
                 Technique = canva.Technique,
                 DateOfEntry = canva.DateOfEntry,
                 MuseumId = canva.MuseumId,
-
                 Artists = canva.Works.Select(w => w.Artist.Name).ToList(),
-                Comments = canva.Comments.Select(c => new CommentResponseDto
-                {
-                    Id = c.Id,
-                    Content = c.Content,
-                    Username = c.User.Username
-                }).OrderByDescending(c => c.CreatedAt).ToList()
+                Comments = canva.Comments
+                    .OrderByDescending(c => c.CreatedAt)
+                    .Select(c => c.Content) 
+                    .ToList()
             });
         }
 
@@ -94,12 +92,9 @@ namespace Museo.Services
         {
             var canva = await _canvasRepo.GetById(id);
 
-            if (canva == null)
-            {
-                return null;
-            }
+            if (canva == null) return null;
 
-            var Dto = new CanvasDto
+            return new CanvasDto
             {
                 Id = canva.Id,
                 Title = canva.Title,
@@ -107,18 +102,12 @@ namespace Museo.Services
                 DateOfEntry = canva.DateOfEntry,
                 MuseumId = canva.MuseumId,
                 Artists = canva.Works.Select(w => w.Artist.Name).ToList(),
-                Comments = canva.Comments.Select(c => new CommentResponseDto
-                {
-                    Id = c.Id,
-                    Content = c.Content,
-                    CreatedAt = c.CreatedAt,
-                    CanvasId = c.CanvasId,
-                    UserId = c.UserId,
-                    Username = c.User.Username
-                }).OrderByDescending(c => c.CreatedAt).ToList()
-            };
 
-            return Dto;
+                Comments = canva.Comments
+                    .OrderByDescending(c => c.CreatedAt)
+                    .Select(c => c.Content)
+                    .ToList()
+            };
         }
         public async Task<Canvas?> Update(Guid id, UpdateCanvasDto dto)
         {

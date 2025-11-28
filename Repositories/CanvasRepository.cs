@@ -29,14 +29,14 @@ namespace Museo.Repositories
 
         public async Task<IEnumerable<Canvas>> GetAll()
         {
-            
             return await _context.Canvas
                 .AsNoTracking()
                 .Include(c => c.Works)
-                    .ThenInclude(w => w.Artist)
-                .Include(c => c.Comments)
-                .ToListAsync();
-        
+                .ThenInclude(w => w.Artist) 
+                .Include(c => c.Comments) 
+                .ThenInclude(c => c.User) 
+        .       ToListAsync();
+
         }
 
        
