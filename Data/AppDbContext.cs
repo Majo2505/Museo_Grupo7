@@ -8,7 +8,7 @@ namespace Museo.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-
+        public DbSet<User> Users => Set<User>();
         public DbSet<Artist> Artist => Set<Artist>();
         public DbSet<Canvas> Canvas => Set<Canvas>();
         public DbSet<Work> Works => Set<Work>();
@@ -17,6 +17,7 @@ namespace Museo.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>();
             modelBuilder.Entity<Artist>(a => {
                 a.HasKey(artist => artist.Id);
                 a.Property(artist => artist.Name).IsRequired().HasMaxLength(200);

@@ -1,5 +1,4 @@
-﻿
-using Museo.Models;
+﻿using Museo.Models;
 
 namespace Museo.Repositories
 {

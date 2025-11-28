@@ -1,20 +1,35 @@
 services:
+  api:
+    build: .
+    container_name: museo_api
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=db;Port=5432;Database=${POSTGRES_DSB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      - Jwt__ExpiresMinutes=60
+      - Jwt__RefreshDays=14
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     image: postgres:16
-    container_name: Museum_pg
+    container_name: museo_pg
     restart: unless-stopped
     environment:
-      POSTGRES_DB: Museumdb
-      POSTGRES_USER: Museumuser
+      POSTGRES_DB: museodb
+      POSTGRES_USER: museouser
       POSTGRES_PASSWORD: supersecret
     ports:
       - "5432:5432"
     volumes:
-      - Museum_data:/var/lib/postgresql/data
+      - museo_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U Museumuser -d Museumdb"]
+      test: ["CMD-SHELL", "pg_isready -U museouser -d museodb"]
       interval: 5s
       timeout: 3s
       retries: 10
 volumes:
-  Museum_data:
+  museo_data:
