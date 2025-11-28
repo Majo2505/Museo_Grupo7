@@ -7,7 +7,7 @@ namespace Museo.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string Role { get; set; } = "Visitante";//"User" | "Admin"
+        public string Role { get; set; } = "Visitante";// "Visitante, Admin , Artista"
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiresAt { get; set; }
         public DateTime? RefreshTokenRevokedAt { get; set; }

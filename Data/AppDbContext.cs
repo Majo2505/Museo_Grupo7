@@ -9,9 +9,10 @@ namespace Museo.Data
         {
         }
         public DbSet<User> Users => Set<User>();
+        public DbSet<Work> Works => Set<Work>();
         public DbSet<Artist> Artist => Set<Artist>();
         public DbSet<Canvas> Canvas => Set<Canvas>();
-        public DbSet<Work> Works => Set<Work>();
+        
         public DbSet<City> Cities => Set<City>();
         public DbSet<Museum> Museums => Set<Museum>();
 
