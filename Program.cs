@@ -6,15 +6,14 @@ using Microsoft.IdentityModel.Tokens;
 using Museo.Data;
 using Museo.Repositories;
 using Museo.Services;
+using Npgsql;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
-using Npgsql; // Asegúrate de tener instalado Npgsql
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cargar variables de entorno desde .env si existe
 Env.Load();
 
 var port = Environment.GetEnvironmentVariable("PORT");
@@ -23,7 +22,6 @@ if (!string.IsNullOrEmpty(port))
     builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 }
 
-// --- Servicios Básicos ---
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -33,7 +31,6 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// --- Rate Limiter ---
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -46,7 +43,6 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
-// --- CORS ---
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("AllowAll", p => p
@@ -55,7 +51,6 @@ builder.Services.AddCors(opt =>
         .AllowAnyMethod());
 });
 
-// --- Autenticación JWT ---
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
 var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
@@ -85,67 +80,72 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
 });
 
-// --- BASE DE DATOS (Lógica Robusta Híbrida) ---
+// --- BASE DE DATOS (Lógica Simplificada y Robusta) ---
 
-// 1. Intento inicial: Leer de appsettings.json (Local)
+// 1. Primero intentamos obtener la conexión estándar de .NET
+// Esto leerá tanto appsettings.json (Local) como la variable ConnectionStrings__Default (Railway)
 var connectionString = builder.Configuration.GetConnectionString("Default");
 
-// 2. Verificar si existe DATABASE_URL (Railway / Producción)
-var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
-if (!string.IsNullOrEmpty(dbUrl))
+// 2. Si NO hay conexión estándar, intentamos parsear DATABASE_URL (Solo como respaldo)
+if (string.IsNullOrEmpty(connectionString))
 {
-    // Si hay URL de Railway, la parseamos para convertirla a formato Npgsql
-    try
+    var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrEmpty(dbUrl))
     {
-        var databaseUri = new Uri(dbUrl);
-        var userInfo = databaseUri.UserInfo.Split(':');
-
-        var builderDb = new NpgsqlConnectionStringBuilder
+        try
         {
-            Host = databaseUri.Host,
-            Port = databaseUri.Port,
-            Username = userInfo[0],
-            Password = userInfo[1],
-            Database = databaseUri.LocalPath.TrimStart('/'),
-            SslMode = SslMode.Require, // Railway requiere SSL usualmente
-            TrustServerCertificate = true
-        };
-        connectionString = builderDb.ToString();
-        Console.WriteLine("--> [DB] Usando configuración de Railway/Nube");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"--> [DB] Error parseando DATABASE_URL: {ex.Message}");
+            var databaseUri = new Uri(dbUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+            var builderDb = new NpgsqlConnectionStringBuilder
+            {
+                Host = databaseUri.Host,
+                Port = databaseUri.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = databaseUri.LocalPath.TrimStart('/'),
+                SslMode = SslMode.Require,
+                TrustServerCertificate = true
+            };
+            connectionString = builderDb.ToString();
+            Console.WriteLine("--> [DB] Usando DATABASE_URL parseada");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"--> [DB] Error parseando DATABASE_URL: {ex.Message}");
+        }
     }
 }
-else if (string.IsNullOrEmpty(connectionString))
-{
-    // 3. Fallback: Construcción manual para Docker si no hay appsettings ni Railway
-    var dbName = Environment.GetEnvironmentVariable("POSTGRES_DB");
-    var dbUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
-    var dbPass = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-    var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST") ?? "localhost";
-    var dbPort = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
 
-    if (!string.IsNullOrEmpty(dbName))
+// 3. Si sigue vacía, intentamos variables de entorno individuales (Docker legacy)
+if (string.IsNullOrEmpty(connectionString))
+{
+    var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST");
+    if (!string.IsNullOrEmpty(dbHost))
     {
+        var dbName = Environment.GetEnvironmentVariable("POSTGRES_DB");
+        var dbUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
+        var dbPass = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+        var dbPort = Environment.GetEnvironmentVariable("POSTGRES_PORT") ?? "5432";
         connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
-        Console.WriteLine("--> [DB] Usando configuración de Variables de Entorno (Docker)");
     }
 }
 
-// Debug para desarrollo
-if (builder.Environment.IsDevelopment())
+// Debug crítico: Imprimir lo que se va a usar (Ocultando password por seguridad)
+if (!string.IsNullOrEmpty(connectionString))
 {
-    Console.WriteLine($"[DEBUG] ConnectionString Final: {connectionString}");
+    var debugConn = System.Text.RegularExpressions.Regex.Replace(connectionString, "Password=.*?;", "Password=***;");
+    Console.WriteLine($"--> [DB] ConnectionString Final: {debugConn}");
+}
+else
+{
+    Console.WriteLine("--> [DB] ¡ERROR! ConnectionString está vacía.");
 }
 
-// Inyección del Contexto
+// Inyección ÚNICA del contexto
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));
 
-// --- Repositorios y Servicios ---
+// Repositorios y Servicios
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<ICanvasRepository, CanvasRepository>();
 builder.Services.AddScoped<IWorkRepository, WorkRepository>();
@@ -164,7 +164,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
-// --- Pipeline ---
+// NOTA: En Railway "Production", esto ocultará Swagger.
+// Si quieres ver Swagger en Railway, comenta el "if" y deja solo app.UseSwagger() y app.UseSwaggerUI()
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
