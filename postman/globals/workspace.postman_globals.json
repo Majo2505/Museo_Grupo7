@@ -3,7 +3,21 @@
   "name": "Globals",
   "values": [
     {
-      "key": "baseUrl",
+      "key": "tokenADMIN",
+      "value": "",
+      "enabled": true,
+      "type": "default",
+      "description": ""
+    },
+    {
+      "key": "tokenVISITANTE",
+      "value": "",
+      "enabled": true,
+      "type": "default",
+      "description": ""
+    },
+    {
+      "key": "tokenARTISTA",
       "value": "",
       "enabled": true,
       "type": "default",
@@ -11,6 +25,6 @@
     }
   ],
   "_postman_variable_scope": "globals",
-  "_postman_exported_at": "2025-11-28T06:45:52.620Z",
+  "_postman_exported_at": "2025-11-28T08:21:53.574Z",
   "_postman_exported_using": "Postman/11.0.0"
 }

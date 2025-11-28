@@ -80,13 +80,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
 });
 
-// --- BASE DE DATOS (Lógica Simplificada y Robusta) ---
 
-// 1. Primero intentamos obtener la conexión estándar de .NET
-// Esto leerá tanto appsettings.json (Local) como la variable ConnectionStrings__Default (Railway)
 var connectionString = builder.Configuration.GetConnectionString("Default");
 
-// 2. Si NO hay conexión estándar, intentamos parsear DATABASE_URL (Solo como respaldo)
 if (string.IsNullOrEmpty(connectionString))
 {
     var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
@@ -116,7 +112,6 @@ if (string.IsNullOrEmpty(connectionString))
     }
 }
 
-// 3. Si sigue vacía, intentamos variables de entorno individuales (Docker legacy)
 if (string.IsNullOrEmpty(connectionString))
 {
     var dbHost = Environment.GetEnvironmentVariable("POSTGRES_HOST");
@@ -130,7 +125,6 @@ if (string.IsNullOrEmpty(connectionString))
     }
 }
 
-// Debug crítico: Imprimir lo que se va a usar (Ocultando password por seguridad)
 if (!string.IsNullOrEmpty(connectionString))
 {
     var debugConn = System.Text.RegularExpressions.Regex.Replace(connectionString, "Password=.*?;", "Password=***;");
@@ -141,11 +135,9 @@ else
     Console.WriteLine("--> [DB] ¡ERROR! ConnectionString está vacía.");
 }
 
-// Inyección ÚNICA del contexto
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));
 
-// Repositorios y Servicios
 builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 builder.Services.AddScoped<ICanvasRepository, CanvasRepository>();
 builder.Services.AddScoped<IWorkRepository, WorkRepository>();
@@ -164,8 +156,6 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
-// NOTA: En Railway "Production", esto ocultará Swagger.
-// Si quieres ver Swagger en Railway, comenta el "if" y deja solo app.UseSwagger() y app.UseSwaggerUI()
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

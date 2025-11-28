@@ -80,7 +80,16 @@ namespace Museo.Services
                 DateOfEntry = canva.DateOfEntry,
                 MuseumId = canva.MuseumId,
 
-                Artists = canva.Works.Select(w => w.Artist.Name).ToList()
+                Artists = canva.Works.Select(w => w.Artist.Name).ToList(),
+                Comments = canva.Comments.Select(c => new CommentResponseDto
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    CreatedAt = c.CreatedAt,
+                    CanvasId = c.CanvasId,
+                    UserId = c.UserId,
+                    Username = c.User.Username
+                }).OrderByDescending(c => c.CreatedAt).ToList()
             });
         }
 
