@@ -76,7 +76,7 @@ namespace Museo.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Forbid(ex.Message); 
+                return StatusCode(403, new { message = ex.Message }); 
             }
         }
 
@@ -87,9 +87,10 @@ namespace Museo.Controllers
             try
             {
                 Guid currentUserId = GetCurrentUserId();
+
                 await _commentService.DeleteComment(commentId, currentUserId);
 
-                return NoContent();
+                return NoContent(); 
             }
             catch (KeyNotFoundException)
             {
@@ -97,7 +98,7 @@ namespace Museo.Controllers
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Forbid(ex.Message); 
+                return StatusCode(403, new { message = ex.Message }); 
             }
         }
     }
