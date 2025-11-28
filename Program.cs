@@ -100,6 +100,7 @@ builder.Services.AddScoped<ICanvasRepository, CanvasRepository>();
 builder.Services.AddScoped<IWorkRepository, WorkRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IMuseumRepository, MuseumRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 
 builder.Services.AddScoped<IArtistService, ArtistService>();
@@ -107,6 +108,7 @@ builder.Services.AddScoped<ICanvasService, CanvasService>();
 builder.Services.AddScoped<IWorkService, WorkService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IMuseumService, MuseumService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

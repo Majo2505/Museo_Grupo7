@@ -14,6 +14,7 @@ namespace Museo.Data
         public DbSet<Work> Works => Set<Work>();
         public DbSet<City> Cities => Set<City>();
         public DbSet<Museum> Museums => Set<Museum>();
+        public DbSet<Comment> Comments => Set<Comment>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,6 +57,24 @@ namespace Museo.Data
                 m.Property(museum => museum.Description).IsRequired().HasMaxLength(500);
                 m.Property(museum => museum.OpeningYear).IsRequired();
                 m.HasMany(museum => museum.Canvas).WithOne(canvas => canvas.Museum).HasForeignKey(canvas => canvas.MuseumId).OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Comment>(c =>
+            {
+                c.HasKey(comment => comment.Id);
+                c.Property(comment => comment.Content).IsRequired().HasMaxLength(500); 
+
+                // Relation 1:N with User 
+                c.HasOne(comment => comment.User)
+                 .WithMany() 
+                 .HasForeignKey(comment => comment.UserId)
+                 .OnDelete(DeleteBehavior.Restrict); 
+
+                // Relation 1:N with Canvas
+                c.HasOne(comment => comment.Canvas)
+                 .WithMany()
+                 .HasForeignKey(comment => comment.CanvasId)
+                 .OnDelete(DeleteBehavior.Cascade); 
             });
         }
     }
