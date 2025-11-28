@@ -1,0 +1,20 @@
+{
+  "workspace": {
+    "id": "5f8388de-f526-41d1-8b1c-4a3220cdbaa7"
+  },
+  "entities": {
+    "collections": [
+      "..\\postman\\collections\\TEC WEB.postman_collection.json",
+      "..\\postman\\collections\\New Collection.postman_collection.json",
+      "..\\postman\\collections\\SIS INFO.postman_collection.json",
+      "..\\postman\\collections\\TechConf API Exam.postman_collection.json",
+      "..\\postman\\collections\\TecWebFest – Exam Flow.postman_collection.json",
+      "..\\postman\\collections\\TecWebProyecto.postman_collection.json",
+      "..\\postman\\collections\\hospital.postman_collection.json"
+    ],
+    "environments": [],
+    "specs": [],
+    "flows": [],
+    "globals": []
+  }
+}
