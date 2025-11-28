@@ -85,9 +85,6 @@ namespace Museo.Services
                 {
                     Id = c.Id,
                     Content = c.Content,
-                    CreatedAt = c.CreatedAt,
-                    CanvasId = c.CanvasId,
-                    UserId = c.UserId,
                     Username = c.User.Username
                 }).OrderByDescending(c => c.CreatedAt).ToList()
             });
