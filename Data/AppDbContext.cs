@@ -9,10 +9,9 @@ namespace Museo.Data
         {
         }
         public DbSet<User> Users => Set<User>();
-        public DbSet<Work> Works => Set<Work>();
         public DbSet<Artist> Artist => Set<Artist>();
         public DbSet<Canvas> Canvas => Set<Canvas>();
-        
+        public DbSet<Work> Works => Set<Work>();
         public DbSet<City> Cities => Set<City>();
         public DbSet<Museum> Museums => Set<Museum>();
         public DbSet<Comment> Comments => Set<Comment>();
@@ -65,13 +64,11 @@ namespace Museo.Data
                 c.HasKey(comment => comment.Id);
                 c.Property(comment => comment.Content).IsRequired().HasMaxLength(500); 
 
-                // Relation 1:N with User 
                 c.HasOne(comment => comment.User)
                  .WithMany() 
                  .HasForeignKey(comment => comment.UserId)
                  .OnDelete(DeleteBehavior.Restrict); 
 
-                // Relation 1:N with Canvas
                 c.HasOne(comment => comment.Canvas)
                  .WithMany()
                  .HasForeignKey(comment => comment.CanvasId)
