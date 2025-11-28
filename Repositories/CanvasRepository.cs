@@ -32,11 +32,8 @@ namespace Museo.Repositories
             
             return await _context.Canvas
                 .AsNoTracking()
-                // Carga la colección Works
                 .Include(c => c.Works)
-                    // Carga la navegación Artist dentro de Works
                     .ThenInclude(w => w.Artist)
-                // ➡️ AGREGAR AQUÍ: Carga la colección Comment dentro de Canvas
                 .Include(c => c.Comments)
                 .ToListAsync();
         
