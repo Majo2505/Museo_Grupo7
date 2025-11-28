@@ -22,7 +22,7 @@ namespace Museo.Repositories
         public async Task Delete(Guid id)
         {
             var artista = await _context.Artist.FirstOrDefaultAsync(a => a.Id == id);
-            if (artista == null) throw new InvalidOperationException("Id dont found");
+            if (artista == null) throw new InvalidOperationException("Artist Id not found");
             _context.Artist.Remove(artista);
             await _context.SaveChangesAsync();
         }
@@ -35,7 +35,7 @@ namespace Museo.Repositories
 
         public async Task<IEnumerable<Artist>> GetAll()
         {
-            return await _context.Artist.AsNoTracking().ToListAsync();
+            return await _context.Artist.AsNoTracking().Include(a => a.Works).ThenInclude(w => w.Canvas).ToListAsync();
         }
 
         public async Task<Artist?> GetById(Guid id)
