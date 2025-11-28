@@ -73,7 +73,7 @@ namespace Museo.Data
 
                 // Relation 1:N with Canvas
                 c.HasOne(comment => comment.Canvas)
-                 .WithMany()
+                 .WithMany(ca => ca.Comments)
                  .HasForeignKey(comment => comment.CanvasId)
                  .OnDelete(DeleteBehavior.Cascade); 
             });

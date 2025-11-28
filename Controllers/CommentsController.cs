@@ -37,7 +37,7 @@ namespace Museo.Controllers
 
         // GET /api/comments/canvas/{canvasId}
         [HttpGet("canvas/{canvasId:guid}")]
-        [AllowAnonymous]
+        
         public async Task<ActionResult<IEnumerable<CommentResponseDto>>> GetCommentsByCanvas(Guid canvasId)
         {
             var comments = await _commentService.GetCommentsByCanvas(canvasId);
@@ -46,6 +46,7 @@ namespace Museo.Controllers
 
         // POST /api/comments
         [HttpPost]
+        [Authorize(Roles = "Visitante")]
         public async Task<ActionResult<CommentResponseDto>> Create([FromBody] CreateCommentDto dto)
         {
             
@@ -60,6 +61,7 @@ namespace Museo.Controllers
 
         // PUT /api/comments/{commentId}
         [HttpPut("{commentId:guid}")]
+        [Authorize(Roles = "Visitante")]
         public async Task<ActionResult<CommentResponseDto>> Update(Guid commentId, [FromBody] UpdateCommentDto dto)
         {
             try
@@ -82,6 +84,7 @@ namespace Museo.Controllers
 
         // DELETE /api/comments/{commentId}
         [HttpDelete("{commentId:guid}")]
+        [Authorize(Roles = "Visitante")]
         public async Task<IActionResult> Delete(Guid commentId)
         {
             try
