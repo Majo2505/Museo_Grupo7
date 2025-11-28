@@ -7,7 +7,9 @@ namespace Museo.Models.Dtos
         [Required]
         [MinLength(10)]
         public required string Content { get; init; }
+
         [Required]
-        public Guid CanvaId { get; init; }
+        public Guid CanvasId { get; init; }
+
     }
 }
