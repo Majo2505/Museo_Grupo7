@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Museo.Models.Dtos.Museum;
 using Museo.Services;
 
@@ -29,6 +30,7 @@ namespace Museo.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Create([FromBody] CreateMuseumDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -44,6 +46,7 @@ namespace Museo.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateMuseumDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -59,6 +62,7 @@ namespace Museo.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> Delete(Guid id)
         {
             try

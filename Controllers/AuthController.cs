@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Museo.Models.DTOS;
 using Museo.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Museo.Controllers
 {
@@ -24,7 +25,11 @@ namespace Museo.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var (ok, response) = await _service.LoginAsync(dto);
-            if (!ok || response is null) return Unauthorized();
+            if (!ok || response is null) return Unauthorized(new
+            {
+                error = "Credenciales inválidas.", // Usamos el mensaje del servicio
+                status = 401
+            }); ;
             return Ok(response);
         }
 
