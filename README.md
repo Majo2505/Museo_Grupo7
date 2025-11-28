@@ -1,4 +1,4 @@
-﻿# 🏛️ Museo API - Documentación
+﻿# 🏛️ Museo API
 
 ![.NET](https://img.shields.io/badge/.NET-8.0%20%7C%209.0-512BD4?style=flat&logo=dotnet)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat&logo=docker)
@@ -6,239 +6,241 @@
 ![Security](https://img.shields.io/badge/Security-JWT%20%2B%20Refresh%20Token-green)
 ![Pattern](https://img.shields.io/badge/Architecture-Repository%20Pattern-orange)
 
+This document provides a detailed technical overview of the "Museo" RESTful API, designed for the integral management of a digital art ecosystem. It delves into architectural decisions, security structure, and offers a complete guide to every available endpoint.
+
 ---
 
-## 👥 Equipo de Desarrollo - Grupo 7
+## 👥 Development Team - Group 7
 
 | Ariana Aylen Pita Vargas |
-| Maria Jose Sandoval Orellana |
+| Maria Jose Sandoval Orellana* |
 | Sebastian Alejandro Arce Antezana |
 
 ---
 
-## 🏗️ Arquitectura y Decisiones de Diseño
+## 🏗️ Architecture and Design Decisions
 
-La API ha sido construida sobre una arquitectura limpia y en capas, priorizando la mantenibilidad, escalabilidad y seguridad.
+The API has been built upon a clean, layered architecture, prioritizing maintainability, scalability, and security.
 
-### 1. Patrón Repository y Capa de Servicios
-La lógica está estrictamente separada para adherirse al principio de Responsabilidad Única (SRP).
-*   **Capa de Repositorio (`Repositories/`):** Actúa como una abstracción sobre el `DbContext` de Entity Framework Core. Su única responsabilidad es la ejecución de operaciones CRUD contra la base de datos. Utiliza carga ansiosa (`Eager Loading`) mediante `Include`/`ThenInclude` para optimizar consultas que requieren datos relacionales.
-*   **Capa de Servicio (`Services/`):** Orquesta la lógica de negocio. Invoca a los repositorios para obtener entidades y las transforma en DTOs, aplica validaciones complejas (ej. un usuario no puede comentar su propia obra si así se definiera) y maneja la lógica de transacciones.
+### 1. Repository Pattern & Service Layer
+Logic is strictly separated to adhere to the Single Responsibility Principle (SRP).
+*   **Repository Layer (`Repositories/`):** Acts as an abstraction over the Entity Framework Core `DbContext`. Its sole responsibility is executing CRUD operations against the database. It utilizes `Eager Loading` via `Include`/`ThenInclude` to optimize queries requiring relational data.
+*   **Service Layer (`Services/`):** Orchestrates business logic. It invokes repositories to retrieve entities and transforms them into DTOs, applies complex validations (e.g., enforcing specific business rules), and handles transaction logic.
 
-### 2. Manejo Avanzado de Relaciones y Ciclos (DTOs)
-Uno de los mayores desafíos en APIs con modelos de datos complejos son las referencias circulares durante la serialización JSON.
-*   **Problema Identificado:** Un `Museo` tiene `Canvas`, un `Canvas` tiene un `Museo`. La serialización directa (`Json(museo)`) provoca una excepción `JsonException` por ciclo infinito.
-*   **Solución Implementada:** Se ha optado por un enfoque de **proyecciones mediante Data Transfer Objects (DTOs)**. En lugar de simplemente ignorar propiedades (`[JsonIgnore]`), se crean modelos de vista específicos para cada endpoint. Esto no solo resuelve el ciclo, sino que permite modelar la respuesta de la API de forma precisa y eficiente, enviando solo los datos que el cliente necesita y ocultando la estructura interna de la base de datos.
+### 2. Advanced Relationship & Cycle Management (DTOs)
+One of the major challenges in APIs with complex data models is circular references during JSON serialization.
+*   **Identified Problem:** A `Museum` has `Canvas` items, and a `Canvas` belongs to a `Museum`. Direct serialization (`Json(museum)`) causes a `JsonException` due to an infinite loop.
+*   **Implemented Solution:** We adopted a **projection approach using Data Transfer Objects (DTOs)**. Instead of simply ignoring properties (`[JsonIgnore]`), specific view models are created for each endpoint. This not only resolves the cycle but also allows for precise and efficient API response modeling, sending only the data the client needs and hiding the internal database structure.
 
-### 3. Seguridad `Stateless` (JWT y Refresh Tokens)
-La seguridad se basa en un esquema de autenticación sin estado (stateless) para garantizar escalabilidad horizontal.
-*   **Access Token (JWT):** Token de corta duración (60 min) firmado con una clave secreta (HMAC-SHA256). Contiene `Claims` (como `UserId` y `Role`) que permiten al backend identificar y autorizar al usuario en cada petición.
-*   **Refresh Token:** Token de larga duración (14 días), almacenado de forma segura en la base de datos y asociado al usuario. Se utiliza para generar nuevos Access Tokens sin requerir que el usuario vuelva a introducir sus credenciales.
-*   **Protección Adicional:** Se implementó `Rate Limiting` en `Program.cs` para mitigar ataques de fuerza bruta en los endpoints de autenticación.
+### 3. Stateless Security (JWT & Refresh Tokens)
+Security is based on a stateless authentication scheme to guarantee horizontal scalability.
+*   **Access Token (JWT):** Short-lived token (60 min) signed with a secret key (HMAC-SHA256). It contains `Claims` (such as `UserId` and `Role`) that allow the backend to identify and authorize the user on every request.
+*   **Refresh Token:** Long-lived token (14 days), securely stored in the database and associated with the user. It is used to generate new Access Tokens without requiring the user to re-enter credentials.
+*   **Additional Protection:** `Rate Limiting` was implemented in `Program.cs` to mitigate brute-force attacks on authentication endpoints.
 
 ---
 
-## 🚀 Guía de Despliegue y Ejecución
+## 🚀 Deployment and Execution Guide
 
-### Opción 1: Docker (Entorno de Producción Recomendado)
-El proyecto está completamente contenerizado para un despliegue rápido y consistente.
+### Option 1: Docker (Recommended Production Environment)
+The project is fully containerized for fast and consistent deployment.
 
-1.  **Clonar Repositorio:**
-    ```bash
+1.  **Clone Repository:**
+    ```
     git clone https://github.com/Majo2505/Museo_Grupo7.git && cd Museo_Grupo7
     ```
 
-2.  **Levantar Contenedores:**
-    Este comando construirá la imagen de la API y levantará el contenedor junto a la base de datos PostgreSQL.
-    ```bash
+2.  **Start Containers:**
+    This command will build the API image and start the container alongside the PostgreSQL database.
+    ```
     docker-compose up -d --build
     ```
 
-3.  **Aplicar Migraciones (Primera Vez):**
-    Aunque la API se inicie, la base de datos estará vacía. Para crear las tablas, ejecuta:
-    ```bash
+3.  **Apply Migrations (First Time Only):**
+    Even if the API starts, the database will be empty. To create the tables, run:
+    ```
     dotnet ef database update
     ```
-    *(Asegúrate de que la ConnectionString en `appsettings.Development.json` apunte a `localhost` y al puerto `5432` si ejecutas este comando desde fuera de Docker).*
+    *(Ensure the ConnectionString in `appsettings.Development.json` points to `localhost` and port `5432` if running this command from outside Docker).*
 
-4.  **Acceso:**
+4.  **Access:**
     *   **Swagger UI:** `http://localhost:8080/swagger`
-    *   **Base de Datos:** Accesible en `localhost:5432`
+    *   **Database:** Accessible at `localhost:5432`
 
-### Opción 2: Local (Entorno de Desarrollo)
-1.  Verificar que .NET SDK 8.0+ y PostgreSQL estén instalados.
-2.  Configurar la `ConnectionString` en `appsettings.Development.json` para que apunte a tu instancia local de Postgres.
-3.  Abrir una terminal en la raíz del proyecto y ejecutar los siguientes comandos:
-    ```bash
-    dotnet ef database update # Crea/Actualiza el esquema de la BD
-    dotnet run               # Inicia la API
+### Option 2: Local (Development Environment)
+1.  Verify that .NET SDK 8.0+ and PostgreSQL are installed.
+2.  Configure the `ConnectionString` in `appsettings.Development.json` to point to your local Postgres instance.
+3.  Open a terminal in the project root and run the following commands:
+    ```
+    dotnet ef database update # Creates/Updates DB schema
+    dotnet run               # Starts the API
     ```
 
 ---
 
-## 📚 Referencia Completa de Endpoints
+## 📚 Complete Endpoint Reference
 
-### Módulo de Autenticación (`/api/Auth`)
+### Authentication Module (`/api/Auth`)
 
-Este módulo gestiona el registro, inicio de sesión y renovación de tokens.
+This module manages registration, login, and token renewal.
 
 ---
 #### **Endpoint: `POST /api/Auth/register`**
-*   **Descripción:** Registra un nuevo usuario en el sistema. La contraseña se hashea usando BCrypt. Por defecto, se le asigna el rol "Visitante".
-*   **Seguridad:** Abierto (`AllowAnonymous`).
+*   **Description:** Registers a new user in the system. Passwords are hashed using BCrypt. By default, the "Visitor" role is assigned.
+*   **Security:** Public (`AllowAnonymous`).
 *   **Request Body (`RegisterDto`):**
-    ```json
+    ```
     {
-      "username": "nuevo_usuario",
-      "email": "usuario@ejemplo.com",
-      "password": "PasswordSegura123!"
+      "username": "new_user",
+      "email": "user@example.com",
+      "password": "SecurePassword123!"
     }
     ```
 *   **Response (201 Created):**
-    Retorna un encabezado `Location` apuntando al recurso creado. El cuerpo está vacío.
-*   **Posibles Errores:**
-    *   `400 Bad Request`: Si el email ya está en uso o si los datos no cumplen las validaciones (ej. contraseña débil).
+    Returns a `Location` header pointing to the created resource. The body is empty.
+*   **Possible Errors:**
+    *   `400 Bad Request`: If the email is already in use or data fails validation (e.g., weak password).
 
 ---
 #### **Endpoint: `POST /api/Auth/login`**
-*   **Descripción:** Autentica a un usuario con su email y contraseña. Si las credenciales son válidas, genera y devuelve un Access Token y un Refresh Token.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
+*   **Description:** Authenticates a user with email and password. If credentials are valid, generates and returns an Access Token and a Refresh Token.
+*   **Security:** Public (`AllowAnonymous`).
 *   **Request Body (`LoginDto`):**
-    ```json
+    ```
     {
-      "email": "usuario@ejemplo.com",
-      "password": "PasswordSegura123!"
+      "email": "user@example.com",
+      "password": "SecurePassword123!"
     }
     ```
 *   **Response (200 OK - `LoginResponseDto`):**
-    ```json
+    ```
     {
       "user": {
         "id": "a1b2c3d4-...",
-        "username": "nuevo_usuario",
-        "email": "usuario@ejemplo.com"
+        "username": "new_user",
+        "email": "user@example.com"
       },
-      "role": "Visitante",
+      "role": "Visitor",
       "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
       "refreshToken": "long_random_string_for_refreshing...",
       "tokenType": "Bearer",
       "expiresIn": 3600
     }
     ```
-*   **Posibles Errores:**
-    *   `401 Unauthorized`: Si las credenciales son incorrectas.
+*   **Possible Errors:**
+    *   `401 Unauthorized`: If credentials are incorrect.
 
 ---
 #### **Endpoint: `POST /api/Auth/refresh`**
-*   **Descripción:** Permite obtener un nuevo Access Token utilizando un Refresh Token válido y no revocado.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
+*   **Description:** Allows obtaining a new Access Token using a valid, unrevoked Refresh Token.
+*   **Security:** Public (`AllowAnonymous`).
 *   **Request Body (`RefreshRequestDto`):**
-    ```json
+    ```
     {
       "refreshToken": "long_random_string_for_refreshing..."
     }
     ```
 *   **Response (200 OK - `LoginResponseDto`):**
-    Devuelve la misma estructura que el endpoint de Login, con tokens renovados.
-*   **Posibles Errores:**
-    *   `401 Unauthorized`: Si el Refresh Token es inválido, ha expirado o ha sido revocado.
+    Returns the same structure as the Login endpoint, with renewed tokens.
+*   **Possible Errors:**
+    *   `401 Unauthorized`: If the Refresh Token is invalid, expired, or revoked.
 
 ---
-### Módulo de Comentarios (`/api/Comments`)
+### Comments Module (`/api/Comments`)
 
-Este módulo demuestra el acceso a recursos protegidos y la extracción de identidad desde el token.
+This module demonstrates access to protected resources and identity extraction from the token.
 
 ---
 #### **Endpoint: `GET /api/Comments/canvas/{canvasId}`**
-*   **Descripción:** Obtiene todos los comentarios asociados a una obra de arte (`Canvas`), ordenados del más reciente al más antiguo.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
+*   **Description:** Retrieves all comments associated with an artwork (`Canvas`), ordered from newest to oldest.
+*   **Security:** Public (`AllowAnonymous`).
 *   **Response (200 OK):**
-    ```json
+    ```
     [
       {
         "id": "c1d2e3f4-...",
-        "content": "¡Una obra de arte espectacular!",
+        "content": "A spectacular masterpiece!",
         "createdAt": "2025-11-28T10:05:00Z",
-        "canvasId": "ID_DEL_CANVAS",
-        "userId": "ID_DEL_USUARIO",
-        "username": "nuevo_usuario"
+        "canvasId": "CANVAS_ID",
+        "userId": "USER_ID",
+        "username": "new_user"
       }
     ]
     ```
 
 ---
 #### **Endpoint: `POST /api/Comments`**
-*   **Descripción:** Crea un nuevo comentario para una obra. El sistema extrae automáticamente el `UserId` del token JWT, garantizando que el autor sea el usuario autenticado.
-*   **Seguridad:** Protegido (`[Authorize]`). Requiere un `Bearer Token` válido en el encabezado `Authorization`.
+*   **Description:** Creates a new comment for an artwork. The system automatically extracts the `UserId` from the JWT token, guaranteeing the author is the authenticated user.
+*   **Security:** Protected (`[Authorize]`). Requires a valid `Bearer Token` in the `Authorization` header.
 *   **Request Body (`CreateCommentDto`):**
-    ```json
+    ```
     {
-      "content": "El juego de luces y sombras es magistral.",
+      "content": "The interplay of light and shadow is masterful.",
       "canvasId": "a1b2c3d4-..."
     }
     ```
 *   **Response (201 Created):**
-    Devuelve el comentario recién creado, incluyendo el `username` obtenido de la relación con el usuario.
-    ```json
+    Returns the newly created comment, including the `username` obtained from the user relationship.
+    ```
     {
       "id": "f4e3d2c1-...",
-      "content": "El juego de luces y sombras es magistral.",
+      "content": "The interplay of light and shadow is masterful.",
       "createdAt": "2025-11-28T10:10:00Z",
       "canvasId": "a1b2c3d4-...",
-      "userId": "ID_DEL_USUARIO_AUTENTICADO",
-      "username": "nuevo_usuario"
+      "userId": "AUTHENTICATED_USER_ID",
+      "username": "new_user"
     }
     ```
-*   **Posibles Errores:**
-    *   `401 Unauthorized`: Si no se proporciona un token válido.
-    *   `404 Not Found`: Si el `canvasId` no existe.
+*   **Possible Errors:**
+    *   `401 Unauthorized`: If no valid token is provided.
+    *   `404 Not Found`: If the `canvasId` does not exist.
 
 ---
 #### **Endpoint: `PUT /api/Comments/{commentId}`**
-*   **Descripción:** Actualiza el contenido de un comentario existente. Un usuario solo puede modificar sus propios comentarios.
-*   **Seguridad:** Protegido (`[Authorize]`). Valida que el `UserId` del token coincida con el `UserId` del comentario.
+*   **Description:** Updates the content of an existing comment. Users can only modify their own comments.
+*   **Security:** Protected (`[Authorize]`). Validates that the token's `UserId` matches the comment's `UserId`.
 *   **Request Body (`UpdateCommentDto`):**
-    ```json
+    ```
     {
-      "content": "Corrección: El juego de luces y sombras es sublime."
+      "content": "Correction: The interplay of light and shadow is sublime."
     }
     ```
-*   **Response (200 OK):** Devuelve el comentario actualizado.
-*   **Posibles Errores:**
-    *   `403 Forbidden`: Si el usuario intenta modificar un comentario que no le pertenece.
-    *   `404 Not Found`: Si el `commentId` no existe.
+*   **Response (200 OK):** Returns the updated comment.
+*   **Possible Errors:**
+    *   `403 Forbidden`: If the user tries to modify a comment that does not belong to them.
+    *   `404 Not Found`: If the `commentId` does not exist.
 
 ---
 #### **Endpoint: `DELETE /api/Comments/{commentId}`**
-*   **Descripción:** Elimina un comentario. Solo el autor del comentario o un administrador pueden realizar esta acción.
-*   **Seguridad:** Protegido (`[Authorize]`). Valida la autoría.
-*   **Response (204 No Content):** No devuelve cuerpo si la eliminación es exitosa.
-*   **Posibles Errores:**
-    *   `403 Forbidden`: Si el usuario no es el autor.
-    *   `404 Not Found`: Si el `commentId` no existe.
+*   **Description:** Deletes a comment. Only the comment author or an administrator can perform this action.
+*   **Security:** Protected (`[Authorize]`). Validates authorship.
+*   **Response (204 No Content):** Returns no body if deletion is successful.
+*   **Possible Errors:**
+    *   `403 Forbidden`: If the user is not the author.
+    *   `404 Not Found`: If the `commentId` does not exist.
 
 ---
 
-### Módulo de Artistas (`/api/Artist`)
+### Artist Module (`/api/Artist`)
 
-Este controlador gestiona el catálogo de artistas. Destaca por el uso de proyecciones DTO para listar las obras de cada artista sin caer en recursividad.
+This controller manages the artist catalog. It stands out for using DTO projections to list works for each artist without falling into recursion.
 
 ---
 #### **Endpoint: `GET /api/Artist`**
-*   **Descripción:** Recupera la lista completa de artistas registrados. Incluye una proyección de los títulos de sus obras (`CanvasTitles`), evitando traer todo el objeto `Canvas` y `Museum` anidados.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
+*   **Description:** Retrieves the full list of registered artists. Includes a projection of their artwork titles (`CanvasTitles`), avoiding fetching the entire nested `Canvas` and `Museum` objects.
+*   **Security:** Public (`AllowAnonymous`).
 *   **Response (200 OK - `IEnumerable<ArtistResponseDto>`):**
-    ```json
+    ```
     [
       {
         "id": "e4b3c2d1-...",
         "name": "Vincent van Gogh",
-        "description": "Pintor postimpresionista neerlandés.",
-        "specialty": "Óleo",
-        "typeOfWork": "Postimpresionismo",
+        "description": "Dutch Post-Impressionist painter.",
+        "specialty": "Oil",
+        "typeOfWork": "Post-Impressionism",
         "canvasTitles": [
-          "La Noche Estrellada",
-          "Los Girasoles"
+          "The Starry Night",
+          "Sunflowers"
         ]
       }
     ]
@@ -246,171 +248,27 @@ Este controlador gestiona el catálogo de artistas. Destaca por el uso de proyec
 
 ---
 #### **Endpoint: `GET /api/Artist/{id}`**
-*   **Descripción:** Obtiene el detalle de un artista específico por su GUID.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
-*   **Response (200 OK - `ArtistResponseDto`):** Misma estructura que el listado, para un solo elemento.
-*   **Posibles Errores:**
-    *   `404 Not Found`: Si el ID no existe.
+*   **Description:** Gets details for a specific artist by their GUID.
+*   **Security:** Public (`AllowAnonymous`).
+*   **Response (200 OK - `ArtistResponseDto`):** Same structure as the list, for a single item.
+*   **Possible Errors:**
+    *   `404 Not Found`: If the ID does not exist.
 
 ---
 #### **Endpoint: `POST /api/Artist`**
-*   **Descripción:** Crea un nuevo perfil de artista en la base de datos.
-*   **Seguridad:** Protegido (`[Authorize]`). Idealmente restringido a roles `Admin` (según políticas configuradas).
+*   **Description:** Creates a new artist profile in the database.
+*   **Security:** Protected (`[Authorize]`). Ideally restricted to `Admin` roles (depending on configured policies).
 *   **Request Body (`CreateArtistDto`):**
-    ```json
+    ```
     {
       "name": "Pablo Picasso",
-      "description": "Pintor y escultor español, creador del cubismo.",
-      "specialty": "Pintura, Escultura",
-      "typeOfWork": "Cubismo"
+      "description": "Spanish painter and sculptor, creator of Cubism.",
+      "specialty": "Painting, Sculpture",
+      "typeOfWork": "Cubism"
     }
     ```
-*   **Response (201 Created):** Retorna el artista creado con su ID generado.
+*   **Response (201 Created):** Returns the created artist with their generated ID.
 
 ---
 
-### Módulo de Obras / Lienzos (`/api/Canvas`)
-
-Este es el núcleo relacional del sistema. Un `Canvas` conecta `Museum` (N:1) y `Artist` (N:M).
-
----
-#### **Endpoint: `GET /api/Canvas`**
-*   **Descripción:** Lista todas las obras de arte disponibles.
-*   **Optimización:** Utiliza DTOs para mostrar los nombres de los artistas (`ArtistNames`) en lugar de objetos `Work` complejos, simplificando el consumo para el frontend.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
-*   **Response (200 OK - `IEnumerable<CanvasResponseDto>`):**
-    ```json
-    [
-      {
-        "id": "a1b2c3d4-...",
-        "title": "Guernica",
-        "technique": "Óleo sobre lienzo",
-        "dateOfEntry": "1937-06-04T00:00:00Z",
-        "museumId": "GUID_DEL_MUSEO",
-        "artistNames": [
-          "Pablo Picasso"
-        ]
-      }
-    ]
-    ```
-
----
-#### **Endpoint: `POST /api/Canvas`**
-*   **Descripción:** Registra una nueva obra. Este endpoint es **transaccional**: crea el registro en la tabla `Canvas` y, simultáneamente, inserta los registros necesarios en la tabla intermedia `Works` para vincular a los artistas.
-*   **Seguridad:** Protegido (`[Authorize]`).
-*   **Request Body (`CreateCanvasDto`):**
-    ```json
-    {
-      "title": "La Persistencia de la Memoria",
-      "technique": "Óleo sobre lienzo",
-      "dateOfEntry": "1931-01-01T00:00:00Z",
-      "museumId": "GUID_DEL_MOMA",
-      "artistIds": [
-        "GUID_ARTISTA_DALI"
-      ]
-    }
-    ```
-*   **Response (201 Created):** Retorna la obra creada.
-*   **Posibles Errores:**
-    *   `404 Not Found`: Si el `museumId` o alguno de los `artistIds` no existen en la base de datos.
-
----
-
-### Módulo de Museos (`/api/Museum`)
-
-Gestiona las entidades principales donde se alojan las obras.
-
----
-#### **Endpoint: `GET /api/Museum`**
-*   **Descripción:** Devuelve el catálogo de museos.
-*   **Proyección:** Incluye una lista anidada de las obras (`Canvas`) que posee cada museo. Para evitar ciclos, los objetos `Canvas` anidados **NO** incluyen la propiedad `Museum` de vuelta, pero **SÍ** incluyen la lista de nombres de sus artistas.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
-*   **Response (200 OK - `IEnumerable<MuseumResponseDto>`):**
-    ```json
-    [
-      {
-        "id": "m1u2s3e4-...",
-        "name": "Museo Reina Sofía",
-        "description": "Museo nacional de arte del siglo XX.",
-        "openingYear": 1992,
-        "cityId": "GUID_MADRID",
-        "canvas": [
-          {
-            "id": "c1a2n3v4...",
-            "title": "Guernica",
-            "artistNames": ["Pablo Picasso"]
-          }
-        ]
-      }
-    ]
-    ```
-
----
-#### **Endpoint: `POST /api/Museum`**
-*   **Descripción:** Registra un nuevo museo en una ciudad específica.
-*   **Seguridad:** Protegido (`[Authorize]`).
-*   **Request Body (`CreateMuseumDto`):**
-    ```json
-    {
-      "name": "Museo del Prado",
-      "description": "Uno de los más importantes del mundo.",
-      "openingYear": 1819,
-      "cityId": "GUID_MADRID"
-    }
-    ```
-*   **Response (201 Created):** Retorna el museo creado.
-
----
-
-### Módulo de Ciudades (`/api/City`)
-
-Entidad geográfica simple que agrupa a los museos.
-
----
-#### **Endpoint: `GET /api/City`**
-*   **Descripción:** Lista las ciudades registradas.
-*   **Seguridad:** Abierto (`AllowAnonymous`).
-*   **Response (200 OK):**
-    ```json
-    [
-      {
-        "id": "c1i2t3y4...",
-        "name": "Madrid",
-        "country": "España",
-        "museum": {
-            "id": "...",
-            "name": "Museo del Prado"
-        }
-      }
-    ]
-    ```
-*(Nota: El objeto `museum` anidado aquí no despliega su lista de `canvas` para mantener la respuesta ligera).*
-
----
-#### **Endpoint: `POST /api/City`**
-*   **Descripción:** Agrega una nueva ciudad al sistema.
-*   **Seguridad:** Protegido (`[Authorize]`).
-*   **Request Body:**
-    ```json
-    {
-      "name": "París",
-      "country": "Francia"
-    }
-    ```
-*   **Response (201 Created):** Retorna la ciudad creada.
-
----
-
-## ⚙️ Configuración y Variables de Entorno
-
-El proyecto utiliza `DotNetEnv` para cargar configuraciones sensibles desde un archivo `.env` en la raíz, protegiendo credenciales en el control de versiones.
-
-| Variable | Descripción | Valor por Defecto (Dev) |
-| :--- | :--- | :--- |
-| `POSTGRES_DB` | Nombre de la Base de Datos | `museodb` |
-| `POSTGRES_USER` | Usuario de Base de Datos | `museouser` |
-| `POSTGRES_PASSWORD` | Contraseña de Base de Datos | `supersecret` |
-| `JWT_KEY` | Clave secreta para firma de Tokens | *(Debe ser robusta)* |
-| `JWT_REFRESHDAYS` | Días de validez del Refresh Token | `14` |
-
----
+### Artwork / Canvas Module (
