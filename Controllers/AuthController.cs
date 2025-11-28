@@ -5,7 +5,7 @@ using Museo.Services;
 namespace Museo.Controllers
 {
     [ApiController]
-    [Route("api/v1/[Controller]")]
+    [Route("api/[Controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
